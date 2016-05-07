@@ -79,5 +79,6 @@
         android:layout_height="wrap_content"
         android:text="Answer"
         android:id="@+id/button4"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:onClick="clickAnswer" />
 </RelativeLayout>
