@@ -1,6 +1,8 @@
 package kusrc.worapong.preyapron.sriwan.kurun;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -129,9 +131,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         int intAvata = findIconMarker(strAvata);
 
         mMap.addMarker(new MarkerOptions()
-        .position(latLng)
-        .icon(BitmapDescriptorFactory.fromResource(intAvata))
-        .title(strName));
+                .position(latLng)
+                .icon(BitmapDescriptorFactory.fromResource(intAvata))
+                .title(strName));
 
 
 
@@ -320,8 +322,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         double myDistance = distance(myLatADouble, myLngADouble,
                 buildLatDoubles[0], buildLngDoubles[0]);
         Log.d("7MayV1", "myDisyance กับ ฐานที่1 ==> " + myDistance);
+        if (myDistance <=10) {
+            myAlert("คุณได้มาถึงฐานที่ 1 แล้ว", R.drawable.base1);
+        }
 
     }   // update
+
+    private void myAlert(String strMessage,
+                         int intIcon) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+        builder.setCancelable(false);
+        builder.setTitle(strMessage);
+        builder.setMessage("คุณต้องตอบคำถามให้ถูกมากกว่า 3 ข้อ ขึ้นไปถึงจะสามารถไปฐานต่อไปได้");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.show();
+
+    } //myAlert
 
     //นี่คือ เมทอด ที่หาระยะ ระหว่างจุด
     private static double distance(double lat1, double lon1, double lat2, double lon2) {
@@ -366,16 +388,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 intIcon = R.drawable.nobita48;
                 break;
             case 5:
-                intIcon = R.drawable.build1;
+                intIcon = R.drawable.base1;
                 break;
             case 6:
-                intIcon = R.drawable.build2;
+                intIcon = R.drawable.base2;
                 break;
             case 7:
-                intIcon = R.drawable.build3;
+                intIcon = R.drawable.base3;
                 break;
             case 8:
-                intIcon = R.drawable.build4;
+                intIcon = R.drawable.base4;
                 break;
 
         }   // switch
