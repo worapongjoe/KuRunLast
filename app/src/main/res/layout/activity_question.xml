@@ -7,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="kusrc.worapong.preyapron.sriwan.kurun.QuestionActivity">
+    tools:context="kusrc.worapong.preyapron.sriwan.kurun.QuestionActivity"
+    android:background="@drawable/bg">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -20,57 +21,71 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imageView7"
-            android:src="@drawable/base1" />
+            android:src="@drawable/base2" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New Text"
             android:id="@+id/textView11"
-            android:textSize="30sp" />
+            android:textSize="50sp" />
     </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/linTopQues">
+        android:layout_below="@+id/linTopQues"
+        android:layout_above="@+id/button4"
+        android:background="#f9f8fe96"
+        android:padding="20dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New Text"
             android:id="@+id/textView10"
-            android:textSize="20sp" />
+            android:textSize="30sp"
+            android:layout_marginTop="30dp" />
 
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp">
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="50dp"
+            android:id="@+id/ragChoice">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="New RadioButton"
-                android:id="@+id/radioButton6" />
+                android:id="@+id/radioButton6"
+                android:textSize="20sp" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="New RadioButton"
-                android:id="@+id/radioButton7" />
+                android:id="@+id/radioButton7"
+                android:layout_marginTop="10dp"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioButton8"
+                android:layout_marginTop="10dp"
+                android:checked="false"
+                android:text="New RadioButton"
+                android:textSize="20sp" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="New RadioButton"
-                android:id="@+id/radioButton8" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New RadioButton"
-                android:id="@+id/radioButton9" />
+                android:id="@+id/radioButton9"
+                android:layout_marginTop="10dp"
+                android:textSize="20sp" />
         </RadioGroup>
     </LinearLayout>
 
@@ -80,5 +95,6 @@
         android:text="Answer"
         android:id="@+id/button4"
         android:layout_alignParentBottom="true"
-        android:onClick="clickAnswer" />
+        android:onClick="clickAnswer"
+        android:textSize="20sp" />
 </RelativeLayout>

@@ -3,6 +3,7 @@ package kusrc.worapong.preyapron.sriwan.kurun;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -42,7 +43,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private double myLatADouble, myLngADouble;
     private String[] resultStrings;
     private double[] buildLatDoubles = {13.12362768,13.12512183,13.12090057,13.11748381};
-    private  double[] buildLngDoubles = {100.91835022,100.9192729,100.91940165,100.92124701};
+    private double[] buildLngDoubles = {100.91835022,100.9192729,100.91940165,100.92124701};
+    private boolean myStatus = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +62,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         criteria.setAltitudeRequired(false);
         criteria.setBearingRequired(false);
         resultStrings = getIntent().getStringArrayExtra("Result");
-
-
-
-        //My Loop
-        //myLoop();
 
     }   // Main Method
 
@@ -148,7 +145,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-               myLoop();
+                myLoop();
             }
         }, 3000);
 
@@ -252,16 +249,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         for (int i=0;i<baseStrings.length;i++) {
 
-                makeAllMarker(baseStrings[i],
-                        Integer.toString(iconBaseInts[i]),
-                        Double.toString(buildLatDoubles[i]),
-                        Double.toString(buildLngDoubles[i]));
+            makeAllMarker(baseStrings[i],
+                    Integer.toString(iconBaseInts[i]),
+                    Double.toString(buildLatDoubles[i]),
+                    Double.toString(buildLngDoubles[i]));
 
 
 
         }   // for
-
-
 
 
         //Update Lat, Lng to mySQL
@@ -269,6 +264,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Synchronize Lat, Lng All User
         SynLatLngAllUser synLatLngAllUser = new SynLatLngAllUser();
+
         synLatLngAllUser.execute();
 
         Handler handler = new Handler();
@@ -278,6 +274,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 createAllMarker();
             }
         }, 3000);   // เวลาที่ใช้อัพเดท Server 3 วินาที
+
 
     }   // createAllMarker
 
@@ -318,32 +315,42 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        //Finddistance
+        //Find Distance
         double myDistance = distance(myLatADouble, myLngADouble,
                 buildLatDoubles[0], buildLngDoubles[0]);
-        Log.d("7MayV1", "myDisyance กับ ฐานที่1 ==> " + myDistance);
-        if (myDistance <=10) {
-            myAlert("คุณได้มาถึงฐานที่ 1 แล้ว", R.drawable.base1);
+        Log.d("7MayV1", "myDistance กับ ฐานที่ 1 ==> " + myDistance);
+        if (myDistance <= 10 && myStatus) {
+            myAlert("ฐานที่ 1", R.drawable.base1);
         }
 
     }   // update
 
-    private void myAlert(String strMessage,
-                         int intIcon) {
+    private void myAlert(final String strMessage,
+                         final int intIcon) {
+
+        myStatus = false;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
         builder.setCancelable(false);
         builder.setTitle(strMessage);
-        builder.setMessage("คุณต้องตอบคำถามให้ถูกมากกว่า 3 ข้อ ขึ้นไปถึงจะสามารถไปฐานต่อไปได้");
+        builder.setMessage("คุณต้องตอบคำถาม ให้ถูกมากกว่า 3 ข้อขึ้นไปถึงจะสามารถไป ฐานต่อไปได้");
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+
+                Intent intent = new Intent(MapsActivity.this, QuestionActivity.class);
+                intent.putExtra("Base", strMessage);
+                intent.putExtra("Icon", intIcon);
+                startActivity(intent);
+
                 dialogInterface.dismiss();
+
             }
         });
         builder.show();
 
-    } //myAlert
+    }   // myAlert
+
 
     //นี่คือ เมทอด ที่หาระยะ ระหว่างจุด
     private static double distance(double lat1, double lon1, double lat2, double lon2) {
@@ -363,6 +370,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static double rad2deg(double rad) {
         return (rad * 180 / Math.PI);
     }   // rad2deg
+
 
 
     private int findIconMarker(String resultString) {

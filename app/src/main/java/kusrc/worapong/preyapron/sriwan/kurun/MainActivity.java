@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, MapsActivity.class);
                 intent.putExtra("Result", resultStrings);
                 startActivity(intent);
+                finish();
 
             } else {
                 //Password False
