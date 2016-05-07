@@ -1,5 +1,6 @@
 package kusrc.worapong.preyapron.sriwan.kurun;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -27,8 +28,8 @@ public class QuestionActivity extends AppCompatActivity {
     private RadioGroup radioGroup;
     private RadioButton choice1RadioButton, choice2RadioButton,
             choice3RadioButton, choice4RadioButton;
-    private String titleString;
-    private int iconAnInt;
+    private String titleString, timeStrings;
+    private int iconAnInt, timesAnInt = 0, scoreAnInt = 0;
     private String[] questionStrings, choice1Strings, choice2Strings,
             choice3Strings, choice4Strings, answerStrings;
     @Override
@@ -102,14 +103,18 @@ public class QuestionActivity extends AppCompatActivity {
     private void changeView() {
         Random random = new Random();
         int intIndex = random.nextInt(20);
+        timesAnInt += 1;
+        timeStrings = Integer.toString(timesAnInt) + ".";
 
         Log.d("7MayV2","intIndex ==>" + intIndex);
 
-        questionTextView.setText(questionStrings[intIndex]);
+        questionTextView.setText(timeStrings + questionStrings[intIndex]);
         choice1RadioButton.setText(choice1Strings[intIndex]);
         choice2RadioButton.setText(choice2Strings[intIndex]);
         choice3RadioButton.setText(choice3Strings[intIndex]);
         choice4RadioButton.setText(choice4Strings[intIndex]);
+
+        radioGroup.clearCheck();
 
     }// changeView
 
@@ -135,7 +140,13 @@ public class QuestionActivity extends AppCompatActivity {
 
         } else {
             //have choose
-            changeView();
+            if (timesAnInt <5) {
+
+                changeView();
+            } else {
+                Intent intent = new Intent(QuestionActivity.this, ShowScore.class);
+                startActivity(intent);
+            }
 
 
         }   //if
